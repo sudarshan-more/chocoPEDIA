@@ -1,14 +1,15 @@
-import { SIGNUP, GET_SIGNUP_SUCCESS, GET_SIGNUP_FAILURE, CHANGE_INPUT_SIGNUP } from "../actionTypes/signupAT";
+import { SIGNUP, GET_SIGNUP_SUCCESS, GET_SIGNUP_FAILURE} from "../actionTypes/signupAT";
+import { CHANGE_INPUT } from "../actionTypes/LoginAT";
 
-export function SignUp(){
-    return { type: SIGNUP}
+export function SignUp(payload){
+    return { type: SIGNUP,payload}
 }
-export function getSignUpSuccess(){
-    return { type: GET_SIGNUP_SUCCESS}
+export function getSignUpSuccess(user){
+    return { type: GET_SIGNUP_SUCCESS,user}
 }
-export function getSignUpFailure(){
-    return { type: GET_SIGNUP_FAILURE}
+export function getSignUpFailure(error){
+    return { type: GET_SIGNUP_FAILURE,error}
 }
-export function changeinputsignup(fieldname, fieldvalue){
-    return {type: CHANGE_INPUT_SIGNUP,fieldname, fieldvalue}
+export function changeinput(fieldname, fieldvalue){
+    return {type: CHANGE_INPUT,fieldname, fieldvalue}
 }
