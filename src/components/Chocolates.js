@@ -2,12 +2,13 @@ import React from "react";
 import { getChocolates } from "../actionCreators/chocolateAC";
 import { connect } from "react-redux";
 import { useEffect } from "react";
-import style from "./Chocolates.module.css";
+import style from "../css/Chocolates.module.css";
 import { Link , Redirect } from "react-router-dom";
 
 function Chocolates(props) {
   useEffect(() => {
     props.dispatch(getChocolates());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if(!props.isLoggedIn){
@@ -25,7 +26,7 @@ function Chocolates(props) {
                 <Link to={`/chocolates/${b.id}`}>
                   {" "}
                   <p className={style.txtstyle}>{b.name}</p>
-                  <img className={style.image} src={b.image} fluid />
+                  <img className={style.image} src={b.image} alt="" />
                 </Link>
               </ol>
             ))}

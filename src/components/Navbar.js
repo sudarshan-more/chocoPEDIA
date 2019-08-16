@@ -1,87 +1,76 @@
-import React from "react";
-import { Nav, Navbar, Form, FormControl } from "react-bootstrap";
-import { NavLink, Link } from "react-router-dom";
-import {} from "./1.PNG";
-import {} from "./Search";
-import { changeinput } from "../actionCreators/SIgnupAC";
-import { connect } from "react-redux";
+import React from 'react';
+import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import {} from './Search';
+import { changeinput } from '../actionCreators/SIgnupAC';
+import { connect } from 'react-redux';
+import { logout } from '../actionCreators/loginAC';
 
 function NavBar(props) {
-  const handleChange = value => e => {
-    // console.log(value,e.target.value)
-    props.dispatch(changeinput(value, e.target.value));
-  };
+	const handleChange = (value) => (e) => {
+		props.dispatch(changeinput(value, e.target.value));
+	};
 
-  return (
-    <>
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">
-          {" "}
-          <img
-            src="./1.PNG"
-            width="100"
-            height="60"
-            className="d-inline-block align-top"
-            alt=""
-            fluid
-          />
-          <NavLink to="/" />
-        </Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link>
-            <NavLink to="/" exact>
-              HOME
-            </NavLink>
-          </Nav.Link>
-          <Nav.Link>
-            <NavLink to="/brands" exact>
-              BRANDS
-            </NavLink>
-          </Nav.Link>
-          <Nav.Link>
-            {" "}
-            <NavLink to="/chocolates" exact>
-              CHOCOLATES
-            </NavLink>
-          </Nav.Link>
-        </Nav>
-        {props.isLoggedIn && (
-          <>
-            <Form inline>
-              {/* <Nav.Link >
-            {" "}
-            <NavLink to="/login" exact>
-              LOGIN
-            </NavLink>
-          </Nav.Link> */}
+	const handlelogout = (e) => {
+		props.dispatch(logout());
+	};
 
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-                name="searchval"
-                onChange={handleChange("searchval")}
-              />
-              <a
-                href={`/search/${props.searchval}`}
-                variant="outline-success"
-              >
-                Search
-              </a>
-            </Form>
-          </>
-        )}
-      </Navbar>
-    </>
-  );
+	return (
+		<div>
+			<Navbar bg="dark" variant="dark">
+				<Navbar.Brand>
+					Chocopedia<NavLink to="/" />
+				</Navbar.Brand>
+				<Nav className="mr-auto">
+					<span className="nav-link">
+						<NavLink to="/" exact>
+							HOME
+						</NavLink>
+					</span>
+					<span className="nav-link">
+						<NavLink to="/brands" exact>
+							BRANDS
+						</NavLink>
+					</span>
+					<span className="nav-link">
+						{' '}
+						<NavLink to="/chocolates" exact>
+							CHOCOLATES
+						</NavLink>
+					</span>
+				</Nav>
+				{props.isLoggedIn && (
+					<div>
+						<Form inline>
+							<span className="nav-link">
+								{' '}
+								<NavLink to="/login" exact>
+									<Button onClick={handlelogout}>Logout</Button>
+								</NavLink>
+							</span>
+
+							<FormControl
+								type="text"
+								placeholder="Search"
+								className="mr-sm-2"
+								onChange={handleChange('searchval')}
+							/>
+							<a href={`/search/${props.searchval}`} variant="outline-success">
+								Search
+							</a>
+						</Form>
+					</div>
+				)}
+			</Navbar>
+		</div>
+	);
 }
 
 function mapStateToProps(state) {
-  // console.log(state)
-  return {
-    searchval: state.searchval,
-    isLoggedIn: state.isLoggedIn
-  };
+	return {
+		searchval: state.searchval,
+		isLoggedIn: state.isLoggedIn
+	};
 }
 
 export default connect(mapStateToProps)(NavBar);

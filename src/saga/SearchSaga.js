@@ -1,19 +1,15 @@
-import {put} from "redux-saga/effects"
-import { getsearchsuccess, getsearchfailure } from "../actionCreators/searchAC";
+import { put } from 'redux-saga/effects';
+import { getsearchsuccess, getsearchfailure } from '../actionCreators/searchAC';
+import { chocsearch, brandsearch } from './ApiCalls';
 
-export function* searchsaga(action){
-  try{
-    debugger;
-     
-        let searchChocResponse = yield fetch(`http://localhost:4000/chocolates?q=${action.searchval}`);
-        let chocresp = yield searchChocResponse.json();
-        let searchBrandResponse = yield fetch(`http://localhost:4000/brands?q=${action.searchval}`);
-        let brandresp = yield searchBrandResponse.json();
-        // let brandresp=[{0:"Hello"}]
-        yield put (getsearchsuccess(chocresp,brandresp));
-      
-     }catch(error){
-    yield put (getsearchfailure(error))
-
-  }
+export function* searchsaga(action) {
+	try {
+		let searchChocResponse = yield fetch(chocsearch + action.searchval);
+		let chocresp = yield searchChocResponse.json();
+		let searchBrandResponse = yield fetch(brandsearch + action.searchval);
+		let brandresp = yield searchBrandResponse.json();
+		yield put(getsearchsuccess(chocresp, brandresp));
+	} catch (error) {
+		yield put(getsearchfailure(error));
+	}
 }
